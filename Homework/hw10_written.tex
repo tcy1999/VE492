@@ -1,0 +1,350 @@
+\documentclass[11pt, answers]{exam}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsfonts, amsmath, amssymb, amsthm}
+\usepackage{mathtools}
+\usepackage{enumerate}
+\usepackage{listings}
+\usepackage{cancel}
+\usepackage{hyperref}
+\usepackage{booktabs}
+\usepackage[boxed]{algorithm}
+\usepackage[noend]{algpseudocode}
+\usepackage{tikz}
+\usepackage{float}
+\usepackage{multicol}
+
+%
+% Basic Document Settings
+%
+
+% \topmargin=-0.5in
+% \evensidemargin=0in
+% \oddsidemargin=0in
+% \textwidth=6.5in
+% \textheight=9.0in
+% \headsep=0.25in
+
+% \linespread{1.1}
+
+\geometry{left=2cm,right=2cm,top=2cm,bottom=2cm}
+
+\pagestyle{headandfoot}
+\lhead{\hmwkClass\ : \hmwkType\ \#\hmwkNumber\ (Due \hmwkDue)}
+\cfoot{\thepage}
+% \renewcommand\headrulewidth{0.4pt}
+% \renewcommand\footrulewidth{0.4pt}
+
+\setlength\parindent{0pt}
+
+%
+% Create Problem Sections
+%
+\qformat{\hfill}
+
+\newcommand{\hmwkType}{Written}
+\newcommand{\hmwkNumber}{10}
+\newcommand{\hmwkClass}{VE 492}
+\newcommand{\hmwkDue}{July 31st, 2020 at 11:59pm}
+
+
+%
+% Title Page
+%
+
+\title{Homework \hmwkNumber\ \hmwkType}
+\date{\hmwkDue}
+
+%
+% Various Helper Commands
+%
+
+% space of real numbers \R
+\newcommand{\R}{\mathbb{R}}
+
+% expected value \EX
+\DeclareMathOperator{\EX}{\mathbb{E}}
+
+% For partial derivatives \pderiv{}{}
+\newcommand{\pderiv}[2]{\frac{\partial}{\partial #1} (#2)}
+
+% argmax \argmax
+\DeclareMathOperator*{\argmax}{arg\,max}
+
+% sign \sign
+\DeclareMathOperator{\sign}{sign}
+
+% norm \norm{}
+\DeclarePairedDelimiter{\norm}{\lVert}{\rVert}
+
+% Keys
+\newcommand{\key}[1]{\fbox{{\sc #1}}}
+\newcommand{\ctrl}{\key{ctrl}--}
+\newcommand{\shift}{\key{shift}--}
+\newcommand{\run}{\key{run} \ }
+\newcommand{\runkey}[1]{\run \key{#1}}
+\newcommand{\extend}{\key{extend} \ }
+\newcommand{\kkey}[1]{\key{k$_{#1}$}}
+
+\begin{document}
+\maketitle
+
+%
+% Question 1
+%
+\begin{questions}
+\section{Propositional Logic 1}
+\question
+
+A logician tells to his son: ``If you don't finish your dinner, you will not play video games afterwards.''
+After the son finishes his meal, he is sent to bed right away.
+
+Which mistake did he make by thinking that he would be able to play video games after dinner?
+
+\underline{Solution}: Denote the event `finish dinner' as $D$, and `play video games' as $G$. The logician's words could then be expressed as $\neg D \Rightarrow \neg G$, whose contrapositive is $G \Rightarrow D$. Being able to play video games after dinner is $D \Rightarrow G$ in logic language. The son treats $G \Rightarrow D$ and $D \Rightarrow G$ as a logical equivalence, which is incorrect. 
+
+\end{questions}
+
+
+%
+% Question 2
+%
+\begin{questions}
+\section{Propositional Logic 2}
+\question
+
+Write the following sentences in CNF form.
+
+\begin{enumerate}[a.]
+\item $\neg (p \vee (q \wedge r))$
+\item $(\neg p \Rightarrow q) \vee \neg (q \wedge r)$
+\item $(p \Rightarrow \neg q) \Leftrightarrow ((q \wedge \neg r) \Rightarrow (\neg p))$
+\end{enumerate}
+
+\underline{Solution}:
+\begin{enumerate}[a.]
+	\item $\neg (p \vee (q \wedge r)) \equiv \neg p \wedge \neg(q \wedge r) \equiv \neg p \wedge (\neg q \vee \neg r)$
+	\item $(\neg p \Rightarrow q) \vee \neg (q \wedge r) \equiv p \vee q \vee \neg q \vee \neg r$
+	\item $(p \Rightarrow \neg q) \Leftrightarrow ((q \wedge \neg r) \Rightarrow (\neg p)) \equiv (\neg p \vee \neg q) \Leftrightarrow (\neg (q \wedge \neg r) \vee \neg p) \equiv (\neg p \vee \neg q) \Leftrightarrow (\neg q \vee r \vee \neg p)$ \\
+	$\equiv ((\neg p \vee \neg q) \Rightarrow (\neg q \vee r \vee \neg p)) \wedge ( (\neg q \vee r \vee \neg p) \Rightarrow (\neg p \vee \neg q))$\\ 
+	$\equiv (\neg(\neg p \vee \neg q) \vee (\neg q \vee r \vee \neg p)) \wedge (\neg (\neg q \vee r \vee \neg p) \vee (\neg p \vee \neg q))$\\ 
+	$\equiv ((p \wedge q)\vee (\neg q \vee r \vee \neg p)) \wedge ((q\wedge \neg r \wedge p) \vee (\neg p \vee \neg q))$ \\
+	$\equiv  (p\vee \neg q \vee r \vee \neg p) \wedge (q\vee \neg q \vee r \vee \neg p) \wedge  (q \vee \neg p \vee \neg q) \wedge (\neg r \vee \neg p \vee \neg q) \wedge (p \vee \neg p \vee \neg q)$
+\end{enumerate}
+
+\end{questions}
+
+
+%
+% Question 3
+%
+\begin{questions}
+\section{Propositional Logic 3}
+\question
+
+Consider a vocabulary with only four propositions, A, B, C, and D. How many models are there for the following sentences?
+
+\begin{enumerate}[a.]
+	\item $B \vee C$.
+	\item $\neg A\vee \neg B\vee \neg C\vee \neg D$.
+	\item $(A\Rightarrow B)\wedge A\wedge\neg B\wedge C\wedge D$.	
+\end{enumerate}
+
+\underline{Solution}:
+\begin{enumerate}[a.]
+	\item 12
+	\item 15
+	\item 0
+\end{enumerate}
+For a, b, The truth table is shown below
+\begin{table}[htbp]
+	\centering
+	\begin{tabular}{|c|c|c|c|c|c|}\hline
+		$A$ & $B$     & $C$   & $D$  & $B \vee C$ & $\neg A\vee \neg B\vee \neg C\vee \neg D$ \\ \hline
+		T & T & T & T & T & F \\ \hline
+		T & T & T & F & T & T \\ \hline
+		T & T & F & T & T & T \\ \hline
+		T & T & F & F & T & T \\ \hline
+		T & F & T & T & T & T \\ \hline
+		T & F & T & F & T & T \\ \hline
+		T & F & F & T & F & T \\ \hline
+		T & F & F & F & F & T \\ \hline
+		F & T & T & T & T & T \\ \hline
+		F & T & T & F & T & T \\ \hline
+		F & T & F & T & T & T \\ \hline
+		F & T & F & F & T & T \\ \hline
+		F & F & T & T & T & T \\ \hline
+		F & F & T & F & T & T \\ \hline
+		F & F & F & T & F & T \\ \hline
+		F & F & F & F & F & T \\ \hline
+	\end{tabular}
+\end{table}
+
+
+For c, $(A\Rightarrow B)\wedge A\wedge\neg B\wedge C\wedge D \equiv (\neg A \vee B)\wedge A\wedge\neg B\wedge C\wedge D \equiv False$, so 0 model.
+\end{questions}
+
+
+%
+% Question 4
+%
+\begin{questions}
+\section{Propositional Logic 4}
+\question
+
+We have defined four binary logical connectives.
+
+\begin{enumerate}[a.]
+	\item Are there any others that might be useful?
+	\item How many binary connectives can there be?
+	\item Why are some of them not very useful?
+\end{enumerate}
+
+\underline{Solution}:
+\begin{enumerate}[a.]
+	\item Yes. For instance, $xor$ ($\oplus$).
+	\item 16. For two propositions $A$, $B$, there could be $2^4 = 16$ binary combinations of $A, B, \neg A, \neg B$. 
+	\item Some of them might not be useful, such as the combinations representing $A, \neg A, B, \neg B, True$, $False$. These binary combinations do not represent new logical relationships between the two propositions other than unary combinations, and are actually not influnced by one of the two propositions or both of the propositions.  
+\end{enumerate}
+\end{questions}
+
+
+%
+% Question 5
+%
+\begin{questions}
+\section{Propositional Logic 5}
+\question
+
+The inference rule \textit{Modus Tollens} is written as follows:
+\begin{align*}
+	\frac{\neg q, p \Rightarrow q}{\neg p}
+\end{align*}
+
+Prove that Modus Tollens is equivalent to Modus Ponens, i.e., the latter can be proved from the former, and the other around.
+
+\underline{Solution}: 
+\begin{enumerate}
+	\item Modus Tollens $\Rightarrow$ Modus Ponens: 
+	
+	Modus Tollens is equivalent to $(\neg q \wedge (p \Rightarrow q)) \Rightarrow \neg p \equiv (\neg q \wedge (\neg p \vee q)) \Rightarrow \neg p$. Subsititute $a = \neg q, \ b = \neg p$ into the sentence, we then have $(a \wedge (b \vee \neg a)) \Rightarrow b \equiv (a \wedge (a \Rightarrow b)) \Rightarrow b$, which is just Modus Ponens.
+	\item Modus Ponens $\Rightarrow$ Modus Tollens: 
+	
+	Modus Ponens, which is written as follows:
+	\begin{align*}
+	\frac{p, p \Rightarrow q}{q}
+	\end{align*}
+	
+	is equivalent to $(p \wedge (p \Rightarrow q)) \Rightarrow q \equiv (p \wedge (\neg p \vee q)) \Rightarrow q$. Subsititute $a = \neg q, \ b = \neg p$ into the sentence, we then have $(\neg b \wedge (b \vee \neg a)) \Rightarrow \neg a \equiv (\neg b \wedge (a\Rightarrow b)) \Rightarrow \neg a$, which is just Modus Tollens.
+	
+\end{enumerate}
+
+\end{questions}
+
+%
+% Question 6
+%
+\begin{questions}
+\section{First-Order Logic 1}
+\question
+
+Translate the following sentences in first-order logic:
+
+\begin{enumerate}[a.]
+\item Alice likes everything that Bob dislikes.
+\item Bob doesn't like everything Alice likes.
+\item Charles doesn't like anything Alice likes.
+\item David likes anything everybody else dislikes.
+\item I like writing sentences in first-order logic.
+\item A parent of my sibling is my parent.
+\item A child of my parent, who is not me, is my sibling.
+\end{enumerate}
+
+Try to use a minimum number of predicates, functions, and constants.
+
+\underline{Solution}:
+
+Meaning of functions:
+\begin{itemize}
+	\item $Likes(x, y)$: Person $x$ likes something $y$
+	\item $Person(x)$: $x$ is a person
+	\item $FirstOrderLogicSentence(x)$: $x$ is a sentence in first-order logic
+	\item $ILikeWrite(x)$: $x$ is a sentence I like writing
+	\item $ParentAndChild(x, y)$: $x$ is a parent of $y$, or equivalently, $y$ is a child of $x$
+\end{itemize}
+
+\begin{enumerate}[a.]
+	\item $\forall x \ \neg Likes(Bob, x) \Rightarrow Likes(Alice, x)$
+	\item  $\exists x \ Likes(Alice, x) \Rightarrow \neg Likes(Bob, x)$
+	\item $\forall x \ Likes(Alice, x) \Rightarrow \neg Likes(Charles, x)$
+	\item $\forall x,y \ Person(y) \wedge \neg(y = David) \wedge (\neg Likes(y, x)) \Rightarrow Likes(David, x)$ 
+	\item $\forall s \ FirstOrderLogicSentence(s) \Rightarrow ILikeWrite(s)$
+	\item $\forall x \ ParentAndChild(x, my\ sibling) \wedge ParentAndChild(x, I)$
+	\item $\forall c \ ParentAndChild(my\ parent, c) \wedge \neg (c = me) \Rightarrow c = my\ sibling$
+\end{enumerate}
+\end{questions}
+
+%
+% Question 7
+%
+\begin{questions}
+\section{First-Order Logic 2}
+\question
+
+Translate into good, natural English (no $x$s or $y$s):
+
+$$\forall x,y,l\ SpeaksLanguage(x,l)\wedge SpeaksLanguage(y,l)\Rightarrow Understands(x,y).$$
+
+\underline{Solution}: All the people who speak the same language could understand each other.
+\end{questions}
+
+
+%
+% Question 8
+%
+\begin{questions}
+\section{First-Order Logic 3}
+\question
+
+Consider a first-order logical knowledge base that describes worlds containing people, songs, albums (e.g., "Meet the Beatles") and disks (i.e., particular physical instances of CDs), The vocabulary contains the following symbols:
+\begin{itemize}
+	\item $CopyOf(d,a)$: Predicate. Disk $d$ is a copy of album $a$.
+	\item $Owns(p, d)$: Predicate. Person $p$ owns disk $d$.
+	\item $Sings(p, s, a)$: Album $a$ includes a recording of song $s$ sung by person $p$. 
+	\item $Wrote(p, s)$: Person $p$ wrote song $s$.
+	\item $McCartney$, $Gersharin$, $BHoliday$, $Joe$, $EleanorRigby$, $TheManILove$, $Revolver$: Constants with the obvious meanings.
+\end{itemize}
+
+Express the following statements in first-order logic:
+\begin{enumerate}[a.]
+	\item Gershwin wrote "The Man I Love."
+	\item Gershwin did not write "Eleanor Rigby."
+	\item Either Gershwin or McCartney wrote "The Man I Love."
+	\item Joe has written at least one song.
+	\item Joe owns a copy of Revolver.
+	\item Every song that McCartney sings on Revolver was written by McCartney.
+	\item Gershwin did not write any of the songs on $Revolver$.
+	\item Every song that Gershwin wrote has been recorded on some album. (Possibly different songs are recorded on different albums.)
+	\item There is a single album that contains every song that Joe has written.
+	\item Joe owns a copy of an album that has Billie Holiday singing "The Man I Love."
+	\item Joe owns a copy of every album that has a song sung by McCartney. (Of course, each different album is instantiated in a different physical CD.)
+	\item Joe owns a copy of every album on which all the songs are sung by Billie Holiday.
+\end{enumerate}
+
+\underline{Solution}:
+\begin{enumerate}[a.]
+	\item $Wrote(Gershwin, TheManILove)$
+	\item $\neg Wrote(Gershwin, EleanorRigby)$
+	\item $Wrote(Gershwin, TheManILove) \vee Wrote(McCartney, TheManILove)$
+	\item $\exists s\ Wrote(Joe, s)$
+	\item $\exists d\ CopyOf(d, Revolver) \wedge Owns(Joe, d)$
+	\item $\forall s\ Sings(McCartney, s, Revolver) \wedge Wrote(McCartney, s)$
+	\item $\forall s, p\ Sings(p, s, Revolver) \wedge \neg Wrote(Gershwin, s)$
+	\item $\forall s\ Wrote(Gershwin, s) \Rightarrow \exists a\ \forall p\ Sings(p, s, a)$
+	\item $\exists a\ \forall p,s\ Wrote(Joe, s) \wedge Sings(p, s, a)$ 
+	\item $\exists a,d\ CopyOf(d, a)\wedge Owns(Joe, d)  \wedge Sings(BillieHoliday, TheManILove, a)$
+	\item $\forall a \exists s\ Sings(McCartney, s, a) \Rightarrow \exists d\ CopyOf(d, a)\wedge Owns(Joe, d)  $
+	\item $\forall a \forall s\ Sings(BillieHoliday, s, a) \Rightarrow \exists d\ CopyOf(d, a)\wedge Owns(Joe, d)  $
+\end{enumerate}
+\end{questions}
+
+\end{document}

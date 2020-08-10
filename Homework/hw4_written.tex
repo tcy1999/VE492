@@ -1,0 +1,219 @@
+\documentclass[11pt, answers]{exam}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsfonts, amsmath, amssymb, amsthm}
+\usepackage{mathtools}
+\usepackage{enumerate}
+\usepackage{listings}
+\usepackage{adjustbox}
+\usepackage{cancel}
+\usepackage{hyperref}
+\usepackage{booktabs}
+\usepackage[boxed]{algorithm}
+\usepackage[noend]{algpseudocode}
+\usepackage{tikz}
+\usepackage{float}
+\usepackage{setspace}
+
+%
+% Basic Document Settings
+%
+
+% \topmargin=-0.5in
+% \evensidemargin=0in
+% \oddsidemargin=0in
+% \textwidth=6.5in
+% \textheight=9.0in
+% \headsep=0.25in
+
+% \linespread{1.1}
+
+\geometry{left=2cm,right=2cm,top=2cm,bottom=2cm}
+
+\pagestyle{headandfoot}
+\lhead{\hmwkClass\ : \hmwkType\ \#\hmwkNumber\ (Due \hmwkDue)}
+\cfoot{\thepage}
+% \renewcommand\headrulewidth{0.4pt}
+% \renewcommand\footrulewidth{0.4pt}
+
+\setlength\parindent{0pt}
+
+%
+% Create Problem Sections
+%
+\qformat{\hfill}
+
+\newcommand{\hmwkType}{Written}
+\newcommand{\hmwkNumber}{4}
+\newcommand{\hmwkClass}{VE 492}
+\newcommand{\hmwkDue}{June 17th, 2020 at 11:59pm}
+
+
+%
+% Title Page
+%
+
+\title{Homework \hmwkNumber\ \hmwkType}
+\date{\hmwkDue}
+
+%
+% Various Helper Commands
+%
+
+% space of real numbers \R
+\newcommand{\R}{\mathbb{R}}
+
+% expected value \EX
+\DeclareMathOperator{\EX}{\mathbb{E}}
+
+% For partial derivatives \pderiv{}{}
+\newcommand{\pderiv}[2]{\frac{\partial}{\partial #1} (#2)}
+
+% argmax \argmax
+\DeclareMathOperator*{\argmax}{arg\,max}
+
+% sign \sign
+\DeclareMathOperator{\sign}{sign}
+
+% norm \norm{}
+\DeclarePairedDelimiter{\norm}{\lVert}{\rVert}
+
+% Keys
+\newcommand{\key}[1]{\fbox{{\sc #1}}}
+\newcommand{\ctrl}{\key{ctrl}--}
+\newcommand{\shift}{\key{shift}--}
+\newcommand{\run}{\key{run} \ }
+\newcommand{\runkey}[1]{\run \key{#1}}
+\newcommand{\extend}{\key{extend} \ }
+\newcommand{\kkey}[1]{\key{k$_{#1}$}}
+
+\begin{document}
+\maketitle
+
+\section{Reinforcement Learning}
+
+Imagine an unknown game which has only two states \{A, B\} and in each state the agent has two actions to choose from: \{Up, Down\}. Suppose a game agent chooses actions according to some policy $\pi$ and generates the following sequence of actions and rewards in the unknown game:
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+$t$ & $s_t$ & $a_t$   & $s_{t+1}$ & $r_t$ \\ \hline
+0 & A  & Down & B    & -2 \\ \hline
+1 & B  & Down & B    & -4 \\ \hline
+2 & B  & Up   & B    & 0  \\ \hline
+3 & B  & Up   & A    & 3  \\ \hline
+4 & A  & Up   & A    & 1  \\ \hline
+\end{tabular}
+\end{table}
+
+Unless specified otherwise, assume a discount factor $\gamma$ = 0.5 and a learning rate $\alpha$ = 0.5.\\
+\begin{enumerate}
+
+\item Recall the update function of Q-learning is:
+
+$$Q\left(s_{t}, a_{t}\right) \leftarrow(1-\alpha) Q\left(s_{t}, a_{t}\right)+\alpha\left(r_{t}+\gamma \max _{a^{\prime}} Q\left(s_{t+1}, a^{\prime}\right)\right)$$
+
+Assume that all Q-values initialized as 0. What are the following Q-values learned by running Q-learning with the above experience sequence?
+
+$$Q(A,Down)=\underline{\quad -1 \quad}, \quad Q(B,Up)=\underline{\quad 1.5 \quad}$$
+
+\item In model-based reinforcement learning, we first estimate the transition function $T(s,a,s')$ and the reward function $R(s,a,s')$. Fill in the following estimates of T and R, estimated from the experience above. Write "n/a" if not applicable or undefined.
+
+$$\hat{T}(A,Up,A)=\underline{\quad 1 \quad} \quad \hat{T}(A,Up,B)=\underline{\quad 0 \quad} \quad \hat{T}(B,Up,A)=\underline{\quad 0.5 \quad} \quad \hat{T}(B,Up,B)=\underline{\quad 0.5 \quad}$$
+
+$$\hat{R}(A,Up,A)=\underline{\quad 1 \quad} \quad \hat{R}(A,Up,B)=\underline{\quad n/a \quad} \quad \hat{R}(B,Up,A)=\underline{\quad 3 \quad} \quad \hat{R}(B,Up,B)=\underline{\quad 0 \quad}$$
+
+\newpage
+
+\item To decouple this question from the previous one, assume we had a different experience and ended up with the following estimates of the transition and reward functions:
+
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+s & a    & s' & $\hat{T}$(s,a,s') & $\hat{R}$(s,a,s') \\ \hline
+A & Up   & A  & 1         & 10        \\ \hline
+A & Down & A  & 0.5       & 2         \\ \hline
+A & Down & B  & 0.5       & 2         \\ \hline
+B & Up   & A  & 1         & -5        \\ \hline
+B & Down & B  & 1         & 8         \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{enumerate}
+\item Give the optimal policy $\hat{\pi}^*(s)$ and $\hat{V}^*s$ for the MDP with the transition function $\hat{T}$ and the reward function $\hat{R}$.
+
+Hint: for any $x \in \mathbb{R},|x|<1$, we have $1+x+x^{2}+x^{3}+x^{4}+\cdots=1 /(1-x)$
+
+$$\hat{\pi}^*(A)=\underline{\quad Up \quad} \quad \hat{\pi}^*(B)=\underline{\quad Down \quad} \quad \hat{V}^*(A)=\underline{\quad 20 \quad} \quad \hat{V}^*(B)=\underline{\quad 16 \quad}$$
+
+\item If we repeatedly feed this new experience sequence through our Q-learning algorithm, what values will it converge to? Assume the learning rate $\alpha_t$ is properly chosen so that convergence is guaranteed.
+\begin{enumerate}
+\item the value found above,$\hat{V}^*$
+\item the optimal values,$V^*$
+\item neither $\hat{V}^*$ nor $V^*$
+\item not enough information to determine
+\end{enumerate}
+Answer: \underline{ i }
+\end{enumerate}
+\end{enumerate}
+
+\newpage
+\section{Policy Evaluation}
+
+In this question, you will be working in an MDP with states S, actions A, discount factor $\gamma$, transition function T, and reward function R.\\
+
+We have some fixed policy $\pi: S \rightarrow A$, which returns an action $a=\pi(s)$ for each state $s \in S$. We want to learn the Q function $Q^{\pi}(s, a)$ for this policy: the expected discounted reward from taking action a in state s and then
+continuing to act according to $\pi$: $Q^{\pi}(s, a)=\sum_{s^{\prime}} T\left(s, a, s^{\prime}\right)\left[R\left(s, a, s^{\prime}\right)+\gamma Q^{\pi}\left(s^{\prime}, \pi\left(s^{\prime}\right)\right]\right.$ The policy $\pi$ will not change
+while running any of the algorithms below.
+\begin{enumerate}
+\item Can we guarantee anything about how the values $Q^{\pi}$ compare to the values $Q^{*}$ for an optimal policy $\pi^{*}$?
+\begin{enumerate}
+\item $Q^{\pi}(s, a) \leq Q^{*}(s, a)$ for all $s,a$
+\item $Q^{\pi}(s, a) = Q^{*}(s, a)$ for all $s,a$
+\item $Q^{\pi}(s, a) \geq Q^{*}(s, a)$ for all $s,a$
+\item None of the above guaranteed
+\end{enumerate}
+Answer: \underline{ a }
+
+\item Suppose T and R are unknown. You will develop sample-based methods to estimate $Q^{\pi}$. You obtain a series of samples $\left(s_{1}, a_{1}, r_{1}\right),\left(s_{2}, a_{2}, r_{2}\right), \ldots\left(s_{T}, a_{T}, r_{T}\right)$ from acting according to this policy (where $a_t = \pi(s_t)$, for all $t$)
+\begin{enumerate}
+\item Recall the update equation for the Temporal Difference algorithm, performed on each sample in sequence:
+$$V\left(s_{t}\right) \leftarrow(1-\alpha) V\left(s_{t}\right)+\alpha\left(r_{t}+\gamma V\left(s_{t+1}\right)\right)$$
+
+which approximates the expected discounted reward $V^{\pi}(s)$ for following policy $\pi$ from each state s, for a learning rate $\alpha$.
+Fill in the blank below to create a similar update equation which will approximate $Q^{\pi}$  using the samples.
+You can use any of the terms $Q, s_{t}, s_{t+1}, a_{t}, a_{t+1}, r_{t}, r_{t+1}, \gamma, \alpha, \pi$ in you equation, as well as $\sum$ and max
+with any index variables (i.e. you could write $\max _{a}$ or $\sum_{a}$ and then use a somewhere else), but no other terms.
+
+$$Q\left(s_{t}, a_{t}\right) \leftarrow(1-\alpha) Q\left(s_{t}, a_{t}\right)+\alpha[\underline{\ r_{t}+\gamma Q(s_{t+1}, a_{t+1}) \ }]$$
+
+\item Now, we will approximate $Q^{\pi}$ using a linear function: $Q(s, a)=\sum_{i=1}^{d} w_{i} f_{i}(s, a)$ for weights $w_{1}, \dots, w_{d}$ and feature functions $f_{1}(s, a), \ldots, f_{d}(s, a)$.
+
+To decouple this part from the previous part, use $Q_{samp}$ for the value in the blank in part (a)(i.e. $\left.Q\left(s_{t}, a_{t}\right) \leftarrow(1-\alpha) Q\left(s_{t}, a_{t}\right)+\alpha Q_{s a m p}\right)$
+Which of the following is the correct sample-based update for each $w_i$?
+\begin{enumerate}
+\item $w_{i} \leftarrow w_{i}+\alpha\left[Q\left(s_{t}, a_{t}\right)-Q_{s a m p}\right]$
+
+\item $w_{i} \leftarrow w_{i}-\alpha\left[Q\left(s_{t}, a_{t}\right)-Q_{s a m p}\right]$
+
+\item $w_{i} \leftarrow w_{i}+\alpha\left[Q\left(s_{t}, a_{t}\right)-Q_{s a m p}\right] f_{i}\left(s_{t}, a_{t}\right)$
+
+\item $w_{i} \leftarrow w_{i}-\alpha\left[Q\left(s_{t}, a_{t}\right)-Q_{s a m p}\right] f_{i}\left(s_{t}, a_{t}\right)$
+
+\item $w_{i} \leftarrow w_{i}+\alpha\left[Q\left(s_{t}, a_{t}\right)-Q_{s a m p}\right]w_i$
+
+\item $w_{i} \leftarrow w_{i}+\alpha\left[Q\left(s_{t}, a_{t}\right)-Q_{s a m p}\right]w_i$
+\end{enumerate}
+Answer: \underline{ iv }
+
+\item The algorithms in the previous parts (part a and b) are:
+\begin{enumerate}
+\item model-based
+\item model-free
+\end{enumerate}
+Answer: \underline{ ii }
+\end{enumerate}
+\end{enumerate}
+\end{document}

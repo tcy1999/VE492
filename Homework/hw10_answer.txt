@@ -1,0 +1,9 @@
+unsure,yes,unsure
+a,c,e,f,g,h,j,k,l
+yes,yes,yes,yes,yes,yes,yes,no
+Valid,Valid,Valid
+213
+1322
+1133
+1131
+1132

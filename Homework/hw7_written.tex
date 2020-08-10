@@ -1,0 +1,217 @@
+\documentclass[11pt, answers]{exam}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsfonts, amsmath, amssymb, amsthm}
+\usepackage{mathtools}
+\usepackage{enumerate}
+\usepackage{listings}
+\usepackage{adjustbox}
+\usepackage{cancel}
+\usepackage{hyperref}
+\usepackage{booktabs}
+\usepackage[boxed]{algorithm}
+\usepackage[noend]{algpseudocode}
+\usepackage{tikz}
+\usepackage{float}
+\usepackage{setspace}
+\usepackage{wasysym}
+
+%
+% Basic Document Settings
+%
+
+% \topmargin=-0.5in
+% \evensidemargin=0in
+% \oddsidemargin=0in
+% \textwidth=6.5in
+% \textheight=9.0in
+% \headsep=0.25in
+
+% \linespread{1.1}
+
+\geometry{left=2cm,right=2cm,top=2cm,bottom=2cm}
+
+\pagestyle{headandfoot}
+\lhead{\hmwkClass\ : \hmwkType\ \#\hmwkNumber\ (Due \hmwkDue)}
+\cfoot{\thepage}
+% \renewcommand\headrulewidth{0.4pt}
+% \renewcommand\footrulewidth{0.4pt}
+
+\setlength\parindent{0pt}
+
+%
+% Create Problem Sections
+%
+\qformat{\hfill}
+
+\newcommand{\hmwkType}{Written}
+\newcommand{\hmwkNumber}{7}
+\newcommand{\hmwkClass}{VE 492}
+\newcommand{\hmwkDue}{July 8th, 2020 at 11:59pm}
+
+
+%
+% Title Page
+%
+
+\title{Homework \hmwkNumber\ \hmwkType}
+\date{\hmwkDue}
+
+%
+% Various Helper Commands
+%
+
+% space of real numbers \R
+\newcommand{\R}{\mathbb{R}}
+
+% expected value \EX
+\DeclareMathOperator{\EX}{\mathbb{E}}
+
+% For partial derivatives \pderiv{}{}
+\newcommand{\pderiv}[2]{\frac{\partial}{\partial #1} (#2)}
+
+% argmax \argmax
+\DeclareMathOperator*{\argmax}{arg\,max}
+
+% sign \sign
+\DeclareMathOperator{\sign}{sign}
+
+% norm \norm{}
+\DeclarePairedDelimiter{\norm}{\lVert}{\rVert}
+
+% Keys
+\newcommand{\key}[1]{\fbox{{\sc #1}}}
+\newcommand{\ctrl}{\key{ctrl}--}
+\newcommand{\shift}{\key{shift}--}
+\newcommand{\run}{\key{run} \ }
+\newcommand{\runkey}[1]{\run \key{#1}}
+\newcommand{\extend}{\key{extend} \ }
+\newcommand{\kkey}[1]{\key{k$_{#1}$}}
+
+\begin{document}
+\maketitle
+
+\section{Bayes' Net: Representation}
+
+
+\begin{enumerate}
+\item Assume we know that a joint distribution $d_1$(over A,B,C) can be represented by Bayes' net $\mathbf{B_1}$. Mark all of the following Bayes' nets that are guaranteed to be able to represent $d_1$.
+
+$\square \quad \mathbf{G_1} \quad   \quad \quad \square \quad \mathbf{G_2} \quad \quad \quad \square  \quad\mathbf{G_3} \quad \quad \quad \CheckedBox \quad \mathbf{G_4} \quad \quad \quad \CheckedBox  \quad \mathbf{G_5}$\\
+
+$\square \quad \mathbf{G_6} \quad   \quad \quad \CheckedBox \quad \mathbf{G_7} \quad \quad \quad \square  \quad\mathbf{G_8} \quad \quad \quad \CheckedBox \quad \mathbf{G_9} \quad \quad \quad \CheckedBox  \quad \mathbf{G_{10}}$\\
+
+$\square \quad $ None of the above.
+
+
+
+\item Assume we know that a joint distribution $d_2$(over A,B,C) can be represented by Bayes' net $\mathbf{B_2}$. Mark all of the following Bayes' nets that are guaranteed to be able to represent $d_2$.
+
+$\square \quad \mathbf{G_1} \quad   \quad \quad \square \quad \mathbf{G_2} \quad \quad \quad \square  \quad\mathbf{G_3} \quad \quad \quad \square \quad \mathbf{G_4} \quad \quad \quad \square  \quad \mathbf{G_5}$\\
+
+$\CheckedBox \quad \mathbf{G_6} \quad   \quad \quad \square \quad \mathbf{G_7} \quad \quad \quad \CheckedBox  \quad\mathbf{G_8} \quad \quad \quad \CheckedBox \quad \mathbf{G_9} \quad \quad \quad \CheckedBox  \quad \mathbf{G_{10}}$\\
+
+$\square \quad $ None of the above.
+
+\item Assume we know that a joint distribution $d_3$(over A,B,C) can be represented by Bayes' net $\mathbf{B_3}$. Mark all of the following Bayes' nets that are guaranteed to be able to represent $d_3$.
+
+$\square \quad \mathbf{G_1} \quad   \quad \quad \square \quad \mathbf{G_2} \quad \quad \quad \square  \quad\mathbf{G_3} \quad \quad \quad \square \quad \mathbf{G_4} \quad \quad \quad \square  \quad \mathbf{G_5}$\\
+
+$\square \quad \mathbf{G_6} \quad   \quad \quad \square \quad \mathbf{G_7} \quad \quad \quad \square  \quad\mathbf{G_8} \quad \quad \quad \CheckedBox \quad \mathbf{G_9} \quad \quad \quad \CheckedBox  \quad \mathbf{G_{10}}$\\
+
+$\square \quad $ None of the above.
+
+\item Assume we know that a joint distribution $d_4$(over A,B,C) can be represented by Bayes' net $\mathbf{B_1} \mathbf{B_2}$ and $\mathbf{B_3}$. Mark all of the following Bayes' nets that are guaranteed to be able to represent $d_4$.
+
+$\CheckedBox \quad \mathbf{G_1} \quad   \quad \quad \CheckedBox \quad \mathbf{G_2} \quad \quad \quad \CheckedBox  \quad\mathbf{G_3} \quad \quad \quad \CheckedBox \quad \mathbf{G_4} \quad \quad \quad \CheckedBox  \quad \mathbf{G_5}$\\
+
+$\CheckedBox \quad \mathbf{G_6} \quad   \quad \quad \CheckedBox \quad \mathbf{G_7} \quad \quad \quad \CheckedBox  \quad\mathbf{G_8} \quad \quad \quad \CheckedBox \quad \mathbf{G_9} \quad \quad \quad \CheckedBox  \quad \mathbf{G_{10}}$\\
+
+$\square \quad $ None of the above.
+\end{enumerate}
+
+\newpage
+
+
+\begin{questions}
+\section{Variable Elimination}
+\question
+
+
+After inserting evidence, we have the following factors to start out with:
+
+
+	\begin{solution}
+    $$P(A), P(B \mid A), P(+c), P(D \mid A, B,+c), P(E \mid D), P(F \mid D), P(G \mid+c, F)$$
+	\end{solution}
+
+When eliminating B we generate a new factor $f_1$ as follows:
+	\begin{solution}
+	$$f_{1}(A,+c, D)=\sum_{b} P(b \mid A) P(D \mid A, b,+c)$$
+	\end{solution}
+	
+This leaves us with the factors:
+	\begin{solution}
+	$$P(A), P(+c), P(E \mid D), P(F \mid D), P(G \mid+c, F), f_{1}(A,+c, D)$$
+	\end{solution}
+\newpage	
+When eliminating D we generate a new factor $f_2$ as follows:
+	\begin{solution}
+	$$f_2(A,+c,E,F) = \sum_{d} P(E \mid d)P(F \mid d)f_{1}(A,+c, d)$$
+	\end{solution}
+	
+This leaves us with the factors:
+	\begin{solution}
+	$$P(A), P(+c), P(G \mid+c, F), f_2(A,+c,E,F)$$
+	\end{solution}
+	
+When eliminating G we generate a new factor $f_3$ as follows:
+	\begin{solution}
+	$$f_3(+c,F) = \sum_{g} P(g \mid+c, F)$$
+	\end{solution}
+
+This leaves us with the factors:
+
+	\begin{solution}
+	$$P(A), P(+c), f_2(A,+c,E,F), f_3(+c,F)$$
+	\end{solution}
+	
+When eliminating F we generate a new factor $f_4$ as follows:
+
+	\begin{solution}
+	$$f_4(A,+c,E) = \sum_{f} f_2(A,+c,E,f) f_3(+c,f)$$
+	\end{solution}
+	
+This leaves us with the factors:
+	\begin{solution}
+	$$P(A), P(+c), f_4(A,+c,E)$$
+	\end{solution}
+	
+(b) Write a formula to compute $P(A,E|+c)$ from the remaining factors.
+
+	\begin{solution}
+	$$P(A,E|+c) = \frac{P(A)P(+c)f_4(A,+c,E)}{\sum_{a,e} P(a)P(+c)f_4(a,+c,e)}$$
+	\end{solution}
+	
+(c) Among $f_1,f_2,f_3,f_4$, which is the largest factor generated, and how large is it? Assume all variables have binary domains and measure the size of each factor by the number of rows in the table that would represent the factor.
+
+	\begin{solution}
+	$f_2$ is the largest factor generated, which has the size $2^3 = 8$
+	\end{solution}
+
+(d) Find a variable elimination ordering for the same query, i.e., for $P(A,E|+c)$, for which the maximum size factor generated along the way is smallest. Hint: the maximum size factor generated in your solution should have only 2 variables, for a size of $2^2$ = 4 table. Fill in the variable elimination ordering and the factors generated into the table below.
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{|c|c|}
+\hline
+Variable Eliminated & Factor Generated \\ \hline
+   B                & $f_1(A,+c,D)$    \\ \hline
+   G                & $f_2(+c,F)$      \\ \hline
+   F                & $f_3(+c,D)$            \\ \hline
+   D                & $f_4(A,+c,E)$             \\ \hline
+\end{tabular}
+\end{table}
+
+For example, in the naive ordering we used earlier, the first row in this table would have had the following two entries: B, $f_1(A,+c,D)$.
+\end{questions}
+\end{document}

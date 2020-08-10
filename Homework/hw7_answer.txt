@@ -1,0 +1,12 @@
+false
+false
+false
+false
+true
+false
++cE
+P(A)f1f2
+A+cF
+P(A)f3
++cF
+f4
